@@ -1,5 +1,5 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
-import { appRouter } from '../trpc'
+import { appRouter, context } from '../trpc'
 
 export const config = {
     runtime: 'edge'
@@ -10,7 +10,7 @@ export default (req: Request) => {
         req,
         endpoint: '/api',
         router: appRouter,
-        createContext: ({req, resHeaders}) => ({req, resHeaders})
+        createContext: context
     })
 }
 
