@@ -1,5 +1,6 @@
+import { z } from 'zod'
 import { inferAsyncReturnType, initTRPC } from '@trpc/server'
-import { loginURL } from './github'
+import { loginURL, getToken } from './github'
 
 import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 
@@ -14,6 +15,12 @@ const publicProcedure = t.procedure
 export const appRouter = t.router({
     authURL: publicProcedure
         .query(() => loginURL),
+    auth: publicProcedure
+        .input(z.object({code: z.string()}))
+        .query(async ({input: {code}}) => {
+            const tokenResponse = await getToken(code)
+            console.log(tokenResponse)
+        }),
     greetings: publicProcedure
         .query(() => 'Hello from TRPC')
 })
