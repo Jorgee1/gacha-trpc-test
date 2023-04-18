@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from './auth'
-
+import { trpc } from './trpc'
 export const Nav = () => {
     const { logOut } = useAuthContext()
     
@@ -13,14 +13,21 @@ export const Nav = () => {
 }
 
 export const Login = () => {
-    const { isAuthed, logIn } = useAuthContext()
     const navigate = useNavigate()
+    const { isAuthed } = useAuthContext()
+    const { data } = trpc.authURL.useQuery()
 
     useEffect(() => {
         if (isAuthed) navigate('/')
     }, [isAuthed])
     
+
+    const click = () => {
+        if (!data) return
+        window.location.href = data
+    }
+
     return <div>
-        <button onClick={logIn}>LogIn</button>
+        <button onClick={click} disabled={!data? true: true}>LogIn</button>
     </div>
 }

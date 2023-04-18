@@ -33,7 +33,7 @@ export const AuthProvider = ({children}: {children: ReactElement}) => {
     }
 
     return <authContext.Provider value={authParams}>
-        {children}
+        { children }
     </authContext.Provider>
 }
 

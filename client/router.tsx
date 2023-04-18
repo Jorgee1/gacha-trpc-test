@@ -18,7 +18,6 @@ export const router = createBrowserRouter([
             {
                 path: '/2',
                 element: <>
-                    <Nav/>
                     <div>Home2</div>
                 </>
             },

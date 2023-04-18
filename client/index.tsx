@@ -2,13 +2,16 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './auth'
 import { router } from './router'
-
+import { TRPCProvider } from './trpc'
 
 const App = () => {
-    return <AuthProvider>
-        <RouterProvider router={router}/>
-    </AuthProvider>
+    return <TRPCProvider>
+        <AuthProvider>
+            <RouterProvider router={router}/>
+        </AuthProvider>
+    </TRPCProvider>
 }
+    
 
 const main = () => {
     const root = document.createElement('div')
@@ -17,3 +20,4 @@ const main = () => {
     createRoot(root).render(<App/>)
 }
 main()
+
