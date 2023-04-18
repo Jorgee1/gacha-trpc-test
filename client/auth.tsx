@@ -1,5 +1,6 @@
 import { useState, createContext, useContext } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { LoaderFunctionArgs, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom'
+import { trpc } from './trpc'
 import type { ReactElement } from 'react'
 
 type AuthContextType = {
@@ -40,4 +41,30 @@ export const AuthProvider = ({children}: {children: ReactElement}) => {
 export const ProtectedRoute = () => {
     const { isAuthed } = useAuthContext()
     return isAuthed? <Outlet/>: <Navigate to='/login'/>
+}
+
+
+export const authPageLoader = ({request}: LoaderFunctionArgs) => {
+    const url = new URL(request.url)
+    return url.searchParams.get('code') || ''
+}
+
+export const AuthPage = () => {
+    const navigate = useNavigate()
+    const { logIn, logOut } = useAuthContext()
+    const code = useLoaderData() as ReturnType<typeof authPageLoader>
+
+    trpc.auth.useQuery({code}, {
+        onSuccess: (response) => {
+            if (!response) navigate('/login')
+            logIn()
+            navigate('/')
+        },
+        onError: () => {
+            logOut()
+            navigate('/login')
+        },
+        retry: false
+    })
+    return <div>Loading...</div>
 }

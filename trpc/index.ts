@@ -20,6 +20,8 @@ export const appRouter = t.router({
         .query(async ({input: {code}}) => {
             const tokenResponse = await getToken(code)
             console.log(tokenResponse)
+
+            return true
         }),
     greetings: publicProcedure
         .query(() => 'Hello from TRPC')

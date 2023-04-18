@@ -1,5 +1,5 @@
 import { createBrowserRouter} from 'react-router-dom'
-import { ProtectedRoute } from './auth'
+import { ProtectedRoute, AuthPage, authPageLoader } from './auth'
 import { Login, Nav } from './pages'
 
 
@@ -26,6 +26,11 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login/>
+    },
+    {
+        path: '/auth',
+        element: <AuthPage/>,
+        loader: authPageLoader
     }
 ])
 
