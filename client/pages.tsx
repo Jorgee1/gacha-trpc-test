@@ -34,6 +34,6 @@ export const Login = () => {
     }
 
     return <div>
-        <button onClick={click} disabled={!OAuthURL? true: true}>LogIn</button>
+        <button onClick={click} disabled={!OAuthURL? true: false}>LogIn</button>
     </div>
 }
