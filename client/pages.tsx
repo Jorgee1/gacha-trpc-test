@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from './auth'
 import { trpc } from './trpc'
@@ -14,8 +14,14 @@ export const Nav = () => {
 
 export const Login = () => {
     const navigate = useNavigate()
+    const [ OAuthURL, setURL ] = useState<string | undefined>(undefined)
     const { isAuthed } = useAuthContext()
-    const { data } = trpc.authURL.useQuery()
+    
+    trpc.authURL.useQuery(undefined, {
+        onSuccess: (responseURL) => {
+            setURL(responseURL)
+        }
+    })
 
     useEffect(() => {
         if (isAuthed) navigate('/')
@@ -23,11 +29,11 @@ export const Login = () => {
     
 
     const click = () => {
-        if (!data) return
-        window.location.href = data
+        if (!OAuthURL) return
+        window.location.href = OAuthURL
     }
 
     return <div>
-        <button onClick={click} disabled={!data? true: true}>LogIn</button>
+        <button onClick={click} disabled={!OAuthURL? true: true}>LogIn</button>
     </div>
 }
