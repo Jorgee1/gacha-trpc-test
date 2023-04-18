@@ -11,8 +11,6 @@ const publicProcedure = t.procedure
 export const appRouter = t.router({
     greetings: publicProcedure
         .query(() => {
-            console.log(process.env.clientId)
-            console.log(process.env.clientSecret)
             'Hello from TRPC'
         })
 })
