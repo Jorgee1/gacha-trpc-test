@@ -1,5 +1,5 @@
-import { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import { inferAsyncReturnType, initTRPC } from '@trpc/server'
+import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 
 export const context = ({ req, resHeaders }: FetchCreateContextFnOptions) => ({req, resHeaders})
 export type Context = inferAsyncReturnType<typeof context>
