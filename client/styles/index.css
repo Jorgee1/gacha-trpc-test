@@ -3,3 +3,11 @@ html {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    color: gray
+}
