@@ -24,7 +24,7 @@ export const user = router({
 
             const session = await db.session.create({data: {token: access_token, userId: id}})
 
-            resHeaders.set('Set-Cookie', `token=${session.session}`)
+            resHeaders.set('Set-Cookie', `token=${session.session}; Secure; HttpOnly; SameSite=strict; Path=/`)
             return true
         })
 })
