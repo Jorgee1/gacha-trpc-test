@@ -54,7 +54,7 @@ export const AuthPage = () => {
     const { logIn, logOut } = useAuthContext()
     const code = useLoaderData() as ReturnType<typeof authPageLoader>
 
-    trpc.auth.useQuery({code}, {
+    trpc.user.auth.useQuery({code}, {
         onSuccess: (response) => {
             if (!response) navigate('/login')
             logIn()

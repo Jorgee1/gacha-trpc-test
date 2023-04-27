@@ -1,5 +1,6 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
-import { appRouter, context } from '../trpc'
+import { context, appRouter } from '../server/trpc'
+
 
 export const config = {
     runtime: 'edge'

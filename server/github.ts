@@ -1,8 +1,5 @@
 import { z } from 'zod'
 
-const clientId = process.env.clientId
-const clientSecret = process.env.clientSecret
-
 const tokenSchema = z.object({
     access_token: z.string(),
     token_type: z.string(),
@@ -15,7 +12,7 @@ const tokenErrorSchema = z.object({
     error_uri: z.string()
 })
 
-export const loginURL = `https://github.com/login/oauth/authorize?client_id=${clientId}`
+export const loginURL = `https://github.com/login/oauth/authorize?client_id=${process.env.clientId}`
 
 export const getToken = async (code: string) => {
     const response = await fetch('https://github.com/login/oauth/access_token', { 
@@ -25,19 +22,15 @@ export const getToken = async (code: string) => {
             accept: 'application/json'
         },
         body: JSON.stringify({
-            client_id: clientId,
-            client_secret: clientSecret,
+            client_id:  process.env.clientId,
+            client_secret: process.env.clientSecret,
             code
         })
     })
 
     const unsafeResponse = await response.json()
-
-    const parsedResponse = tokenSchema.safeParse(unsafeResponse)
-    if (!parsedResponse.success) return tokenErrorSchema.parse(unsafeResponse)
-    
-    return parsedResponse.data
-
+    console.log('GET TOKEN', unsafeResponse)
+    return tokenSchema.parse(unsafeResponse)
 }
 
 const userSchema = z.object({
@@ -87,7 +80,7 @@ export const getUser = async (access_token: string) => {
     })
 
     const unsafeResponse = await response.json()
-
+    
     const parsedResponse = userSchema.safeParse(unsafeResponse)
 
     if (!parsedResponse.success) return userSchemaError.parse(unsafeResponse)

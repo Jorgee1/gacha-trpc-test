@@ -17,7 +17,7 @@ export const Login = () => {
     const [ OAuthURL, setURL ] = useState<string | undefined>(undefined)
     const { isAuthed } = useAuthContext()
     
-    trpc.authURL.useQuery(undefined, {
+    trpc.user.authURL.useQuery(undefined, {
         onSuccess: (responseURL) => {
             setURL(responseURL)
         }
