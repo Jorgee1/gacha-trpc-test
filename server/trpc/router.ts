@@ -3,7 +3,7 @@ import { user } from './user'
 
 export const appRouter = router({
     pull: publicProcedure
-        .query(() => Math.round(Math.random() * 100)),
+        .mutation(() => Math.round(Math.random() * 100)),
     user
 })
 

@@ -1,7 +1,7 @@
 import { createBrowserRouter} from 'react-router-dom'
 import { ProtectedRoute, AuthPage, authPageLoader } from './auth'
 import { Login, Nav } from './pages'
-
+import { Home } from './home'
 
 export const router = createBrowserRouter([
     {
@@ -10,10 +10,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <>
-                    <Nav/>
-                    <div>Home</div>
-                </>
+                element: <Home/>
             },
             {
                 path: '/2',
