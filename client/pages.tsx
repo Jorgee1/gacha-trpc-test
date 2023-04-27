@@ -8,10 +8,12 @@ import { trpc } from './trpc'
 export const Nav = () => {
     const { logOut } = useAuthContext()
 
+    const { data } = trpc.user.whoami.useQuery()
     
     return <nav>
         <Link to="/">Home</Link>
         <Link to="/2">Home2</Link>
+        <div>{data? data.name: 'User'}</div>
         <button onClick={logOut}>LogOut</button>
     </nav>
 }
