@@ -13,9 +13,18 @@ export const publicProcedure = t.procedure
 export const privateProcedure = t.procedure.use(async ({ctx, next}) => {
     const { req } = ctx
     
-    console.log(req.headers.get('Cookie'))
-    //const sessionToken = req.cookies.token || ''
-    const sessionToken = ''
+    const cookies = req.headers.get('Cookie') || ''
+
+    const cookie = cookies.split(';').map(e => e.trim()).find(e => e.includes('token='))
+
+
+    if (!cookie) throw new TRPCError({code: 'UNAUTHORIZED'})
+
+    const paresdCookie = cookie.split('=')
+
+    if (paresdCookie.length !== 2) throw new TRPCError({code: 'UNAUTHORIZED'})
+
+    const sessionToken = paresdCookie[1]
     const session = await db.session.findUnique({where: {session: sessionToken}})
 
     if (!session) throw new TRPCError({code: 'UNAUTHORIZED'})
