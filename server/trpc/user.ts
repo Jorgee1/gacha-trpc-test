@@ -26,5 +26,5 @@ export const user = router({
 
             resHeaders.set('Set-Cookie', `token=${session.session}`)
             return true
-        }),
+        })
 })
