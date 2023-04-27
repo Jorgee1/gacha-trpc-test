@@ -9,7 +9,7 @@ export const Home = () => {
     const pollMutation = trpc.pull.useMutation({
         onSuccess: (result) => {
             setPoll(result)
-            setDisabled(true)
+            setDisabled(false)
         }
     })
 
