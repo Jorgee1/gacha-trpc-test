@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from './auth'
 import { trpc } from './trpc'
+
+
+
 export const Nav = () => {
     const { logOut } = useAuthContext()
+
     
     return <nav>
         <Link to="/">Home</Link>

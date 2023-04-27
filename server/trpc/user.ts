@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { router, publicProcedure } from '.'
+import { router, publicProcedure, privateProcedure } from '.'
 import { loginURL, getToken, getUser } from '../github'
 import { db } from '../../prisma/db'
 
@@ -7,6 +7,10 @@ import { db } from '../../prisma/db'
 export const user = router({
     authURL: publicProcedure
         .query(() => loginURL),
+    whoami: privateProcedure
+        .query(async ({ctx: {user}}) => {
+            return user
+        }),
     auth: publicProcedure
         .input(z.object({code: z.string()}))
         .query(async ({input: {code}, ctx}) => {
